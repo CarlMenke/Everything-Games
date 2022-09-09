@@ -42,6 +42,15 @@ const deleteUser = async (req, res )=>{
     }
 }
 
+const updateUser = async (req, res )=>{
+    try{
+        await User.updateOne({_id:`${req.params.id}`},{userName:`${req.params.newName}`})
+        return res.status(200).send(`Your User Name has been succesfully updated to ${req.params.newName}.`)
+    }catch(error){
+        res.status(500).send({error:error.message})
+    }
+}
+
 const checkUser = async (req, res) =>{
     try{
         const userName  = req.params.userName
@@ -64,5 +73,7 @@ module.exports = {
     createUser,
     getAllUsers,
     deleteUser,
-    checkUser
+    checkUser,
+    updateUser
+
 }

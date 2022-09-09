@@ -18,6 +18,15 @@ export const Account = (props) =>{
         props.setLoggedUser(null)
         props.navigate('/')
     }
+    const handleUpdateUserName = async  () =>{
+
+        const newUserName = document.getElementById('new-user-name').value
+
+        const response = await axios.get(`http://localhost:3001/api/updateUser/${props.loggedUser._id}/${newUserName}`)
+
+        console.log(response)
+
+    }
 
     return(
         <div>
@@ -28,6 +37,8 @@ export const Account = (props) =>{
                 props.navigate('/')
             }}>Log Out</button>
             <button onClick = {() =>{handleDeleteUser()}}>Delete Account</button>
+            <input placeholder = "Enter New User Name" type= "form" id = 'new-user-name'/>  
+            <button onClick = {()=>{handleUpdateUserName()}}>Update UserName</button>
         </div>
     )
 }

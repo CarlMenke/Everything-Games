@@ -11,9 +11,12 @@ router.get('/allusers',controllers.getAllUsers )
 
 router.get('/newUser/:userName/:password/:profilePic',  controllers.createUser)
 
-
 router.get('/checkUser/:userName/:password', controllers.checkUser)
 
 router.get('/deleteUser/:id', controllers.deleteUser)
+
+router.get('/updateUser/:id/:newName', controllers.updateUser)
+
+
 module.exports = router
 

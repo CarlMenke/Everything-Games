@@ -10,7 +10,6 @@ if(props.logged){
     let nameArr = props.loggedUser.userName.split('');
 
     nameArr[0] = nameArr[0].toUpperCase();
-    console.log(nameArr)
 
     const displayName = nameArr.join('')
 

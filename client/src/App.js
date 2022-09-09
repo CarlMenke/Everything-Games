@@ -14,7 +14,6 @@ function App(props) {
   const [logged, setLogged] = useState(false)
   const [loggedUser, setLoggedUser] = useState(null)
 
-console.log(props)
   return (
     <div className="App">
       <Header {...props} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/>
