@@ -5,7 +5,6 @@ import axios from 'axios'
 
 export const Login = (props) =>{
 
-console.log(props)
 
 
 
@@ -21,14 +20,12 @@ console.log(props)
     async function checkUser(){
         if(userName != '' && userPassword != ''){
             const response = await axios.get(`http://localhost:3001/api/checkUser/${userName}/${userPassword}`)
-            console.log('login response' ,response)
 
             if(response.data.exists === false){
                 console.log('User Doesnt Exist Or password is incorrect')
             }else{
                 setLogged(response.data.exists);
                 setLoggedUser(response.data.user[0])
-                console.log(props)
             }
 
         }

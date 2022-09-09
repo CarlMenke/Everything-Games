@@ -13,7 +13,6 @@ export const Account = (props) =>{
 
     const handleDeleteUser = async() =>{
         const response = await axios.get(`http://localhost:3001/api/deleteUser/${props.loggedUser._id}`)
-        console.log(response)
         props.setLogged(false)
         props.setLoggedUser(null)
         props.navigate('/')
@@ -23,8 +22,6 @@ export const Account = (props) =>{
         const newUserName = document.getElementById('new-user-name').value
 
         const response = await axios.get(`http://localhost:3001/api/updateUser/${props.loggedUser._id}/${newUserName}`)
-
-        console.log(response)
 
     }
 
