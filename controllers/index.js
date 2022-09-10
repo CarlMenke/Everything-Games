@@ -1,5 +1,6 @@
 const { db } = require('../models/user');
 const User = require('../models/user')
+const Post = require('../models/post')
 const bcrypt = require('bcrypt')
 
 
@@ -51,6 +52,14 @@ const getAllUsers = async (req, res) =>{
         res.status(500).send({error:error.message})
     }
 }
+const getUser = async (req,res)=>{
+    try{
+        const user = await User.find({_id:`${req.params.id}`})
+        return res.status(200).send(user)
+    }catch(error){
+        res.status(500).send({error:error.message})
+    }
+}
 
 const deleteUser = async (req, res )=>{
     try{
@@ -71,12 +80,34 @@ const updateUser = async (req, res )=>{
 }
 
 
+const createPost = async (req,res) =>{
+    try{
+        const content = req.params.content;
+        const user_id = req.params.user_id
+
+
+        const post  = await new Post({
+            user_id : user_id,
+            content : content
+        })
+        await post.save();
+
+        return res.status(200).json({post})
+
+    }catch(error){
+        res.status(500).send({error:error.message})
+    }
+}
+
+
 //exports  controller funcitons
 module.exports = {
     createUser,
     getAllUsers,
     deleteUser,
     checkUser,
-    updateUser
+    updateUser,
+    createPost,
+    getUser
 
 }

@@ -48,3 +48,21 @@
   text-decoration: none;
 margin: 10px;
 }
+.home-main{
+  display:flex;
+  flex-flow:row nowrap;
+  justify-content: space-around;
+}
+
+.post-container{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+.post-name{
+  margin: 10px;
+}
+.post-content{
+  margin: 10px;
+}
+
