@@ -34,7 +34,7 @@ function App(props) {
         <Route exact path="/" element={<Home {...props} recentPostArray = {recentPostArray} setRecentPostArray = {setRecentPostArray} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/>}/>  
         <Route exact path="/signup" element={<Signup {...props} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/>}/> 
         <Route exact path="/login" element = {<Login {...props} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/> }/>      
-        <Route exact path="/account" element = {<Account {...props} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/> }/>      
+        <Route exact path="/account" element = {<Account {...props} getRecentPostArray = {getRecentPostArray} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/> }/>      
       </Routes>
     </div>
   );

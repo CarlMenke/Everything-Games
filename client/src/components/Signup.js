@@ -11,9 +11,7 @@ export const Signup = (props) =>{
 
     async function createUser(){
         if(newUserName != ''){
-            console.log(`http://localhost:3001/api/newUser/${newUserName}/${newUserPassword}/${newUserProfilePic}`)
             const response = await axios.get(`http://localhost:3001/api/newUser/${newUserName}/${newUserPassword}/${newUserProfilePic}`)
-            console.log(response)
         }
 
     }
@@ -22,15 +20,25 @@ export const Signup = (props) =>{
         createUser()
     },[newUserName])
 
-    const handleNewUserClick = () =>{
-        console.log(props)
+    const handleNewUserClick = async () =>{
+
+        let  allUsers = await axios.get('http://localhost:3001/api/allusers')
+
         const newUserNameInput = document.getElementById('userNameInput').value;
         const newUserPasswordInput = document.getElementById('passwordInput').value;
         const newUserProfilePicInput = document.getElementById('profilePicInput').value;
 
-        setNewUser(newUserNameInput)
-        setnewUserPassword(newUserPasswordInput)
-        setUserProfilePic(newUserProfilePicInput)
+        let checkArray = allUsers.data.filter((user)=>{return user.userName === newUserNameInput})
+
+        console.log('newUserName', newUserName)
+        console.log('allUsers.data', allUsers.data)
+        console.log('checkArray', checkArray)
+
+        if(checkArray.length === 0){
+            setNewUser(newUserNameInput)
+            setnewUserPassword(newUserPasswordInput)
+            setUserProfilePic(newUserProfilePicInput)
+        }else{console.log('User name already in use please choose a differnt name.')}
     }
 
     return(

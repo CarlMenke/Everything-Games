@@ -41,7 +41,6 @@ const checkUser = async (req, res) =>{
             res.status(200).send('Password Incorrect')
         }
 
-
     }catch(error){
         res.status(500).send({error:error.message})
     }
@@ -65,6 +64,10 @@ const getUser = async (req,res)=>{
 
 const deleteUser = async (req, res )=>{
     try{
+        console.log(req.params.id)
+        const deletedPost = await Post.deleteMany({user_id:`${req.params.id}`})
+
+        console.log(deletedPost)
         await User.deleteOne({_id:`${req.params.id}`})
         return res.status(200).send('Your account has been succesfully deleted.')
     }catch(error){
@@ -155,6 +158,16 @@ const wipePosts = async(req,res) =>{
     }
 }
 
+const deleteUserPosts = async (req, res )=>{
+    try{
+        await Post.deleteMany({user_id:`${req.params.id}`})
+
+        return res.status(200).send('All Posts successfully deleted')
+    }catch(error){
+        res.status(500).send({error:error.message})
+    }
+}
+
 
 
 //exports  controller funcitons
@@ -170,4 +183,5 @@ module.exports = {
     getPostIndex,
     resetPostIndex,
     wipePosts,
+    deleteUserPosts
 }

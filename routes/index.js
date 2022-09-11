@@ -29,6 +29,7 @@ router.get('/resetPostIndex', controllers.resetPostIndex)
 
 router.get('/wipePosts', controllers.wipePosts)
 
+router.get('/deleteUserPost', controllers.deleteUserPosts)
 
 
 module.exports = router

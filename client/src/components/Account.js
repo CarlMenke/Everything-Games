@@ -16,6 +16,7 @@ export const Account = (props) =>{
         props.setLogged(false)
         props.setLoggedUser(null)
         props.navigate('/')
+        props.getRecentPostArray();
     }
     const handleUpdateUserName = async  () =>{
 
