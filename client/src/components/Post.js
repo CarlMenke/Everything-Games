@@ -14,10 +14,6 @@ const getUser = async () =>{
 
 getUser()
 
-useEffect(()=>{
-console.log(postOwner)
-}, [postOwner])
-
     return(
         <div className='post-container'>
             <div className = 'post-name'>{postOwner}</div>

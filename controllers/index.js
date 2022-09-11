@@ -1,7 +1,9 @@
-const { db } = require('../models/user');
+const { db, rawListeners } = require('../models/user');
 const User = require('../models/user')
 const Post = require('../models/post')
-const bcrypt = require('bcrypt')
+const PostIndex = require('../models/postindex')
+const bcrypt = require('bcrypt');
+const postindex = require('../models/postindex');
 
 
 
@@ -79,16 +81,38 @@ const updateUser = async (req, res )=>{
     }
 }
 
+const getRecentPosts = async(req,res) =>{
+
+    let rescentPostArray = []
+    try{
+        const response = await Post.find({});
+        
+        response.sort((a,b) =>{
+            return b.index - a.index
+        })
+
+
+
+        res.status(200).send(response)
+    }catch(error){
+        res.status(500).send({error:error.message})
+    }
+}
+
 
 const createPost = async (req,res) =>{
     try{
         const content = req.params.content;
-        const user_id = req.params.user_id
+        const user_id = req.params.user_id;
 
+        let currIndex = await PostIndex.find({})
+        let  newIndex = Number(currIndex[0].index) + 1
+        const response = await PostIndex.updateOne({index:currIndex[0].index}, {$set: {index: newIndex}})
 
         const post  = await new Post({
             user_id : user_id,
-            content : content
+            content : content,
+            index : newIndex
         })
         await post.save();
 
@@ -99,6 +123,39 @@ const createPost = async (req,res) =>{
     }
 }
 
+const getPostIndex = async (req,res) =>{
+
+    try{
+        const response = await PostIndex.find({})
+        res.status(200).send(response)
+    }catch(error){
+        res.status(500).send({error:error.message})
+    }
+}
+
+const resetPostIndex = async(req,res) =>{
+
+    try{
+        const response = await PostIndex.updateOne({}, {index: 0})
+
+        res.status(200).send(response[0].index)
+    }catch(error){
+        res.status(500).send({error:error.message})
+    }
+
+}
+
+const wipePosts = async(req,res) =>{
+    try{
+        const response = await Post.deleteMany({})
+
+        res.status(200).send(response)
+    }catch(error){
+        res.status(500).send({error:error.message})
+    }
+}
+
+
 
 //exports  controller funcitons
 module.exports = {
@@ -108,6 +165,9 @@ module.exports = {
     checkUser,
     updateUser,
     createPost,
-    getUser
-
+    getUser,
+    getRecentPosts,
+    getPostIndex,
+    resetPostIndex,
+    wipePosts,
 }

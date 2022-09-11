@@ -21,6 +21,16 @@ router.get('/newPost/:content/:user_id', controllers.createPost)
 
 router.get('/user/:id', controllers.getUser)
 
+router.get('/recentPosts',controllers.getRecentPosts)
+
+router.get('/getPostIndex', controllers.getPostIndex)
+
+router.get('/resetPostIndex', controllers.resetPostIndex)
+
+router.get('/wipePosts', controllers.wipePosts)
+
+
+
 module.exports = router
 
 ///backend routes

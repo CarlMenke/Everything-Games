@@ -1,5 +1,6 @@
 import './App.css';
 import React from 'react'
+import { useEffect } from 'react';
 import{ Home } from './components/Home'
 import {Header } from './components/Header'
 import {Signup } from './components/Signup'
@@ -7,6 +8,7 @@ import {Login } from './components/Login'
 import {Account} from './components/Account'
 import {useState} from 'react'
 import {Route, Routes, useNavigate} from 'react-router-dom'
+import axios from 'axios';
 
 
 function App(props) {
@@ -14,6 +16,16 @@ function App(props) {
   const [recentPostArray, setRecentPostArray] = useState([])
   const [logged, setLogged] = useState(false)
   const [loggedUser, setLoggedUser] = useState(null)
+
+  const getRecentPostArray = async ()=>{
+
+    const response = await axios.get('http://localhost:3001/api/recentPosts')
+    setRecentPostArray(response.data);
+  }
+
+  useEffect(()=>{
+    getRecentPostArray()
+  },[])
 
   return (
     <div className="App">

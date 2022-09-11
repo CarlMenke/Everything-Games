@@ -5,6 +5,7 @@ const Post = new Schema (
     {
         user_id: {type: String, required: true},
         content: {type: String , required: true},
+        index: {type:Number, required:true}
     },
     {timestamps:true},
 )
