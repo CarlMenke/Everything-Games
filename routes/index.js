@@ -17,7 +17,7 @@ router.get('/deleteUser/:id', controllers.deleteUser)
 
 router.get('/updateUser/:id/:newName', controllers.updateUser)
 
-router.get('/newPost/:content/:user_id', controllers.createPost)
+router.get('/newPost/:content/:user_id/:topic_id', controllers.createPost)
 
 router.get('/user/:id', controllers.getUser)
 

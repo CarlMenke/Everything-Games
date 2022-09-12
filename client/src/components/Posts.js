@@ -9,14 +9,14 @@ const Posts = (props) =>{
     const [creatingPost , setCreatingPost] = useState(false);
     const [newPostContent, setNewPostContent] = useState('');
 
-
+    console.log('displayArray', props.displayArray)
 
     const createNewPost = async () =>{
 
         if(props.logged && newPostContent !== ''){
-        const response = await axios.get(`http://localhost:3001/api/newPost/${newPostContent}/${props.loggedUser._id}`)
+        const response = await axios.get(`http://localhost:3001/api/newPost/${newPostContent}/${props.loggedUser._id}/${props.currTopic}`)
 
-        props.setRecentPostArray([response.data.post,...props.recentPostArray])
+        props.setRecentPostArray([response.data.post,...props.displayArray])
         }
     }
 
@@ -27,7 +27,7 @@ const Posts = (props) =>{
 
 
 
-    if(!creatingPost){
+    if(!creatingPost && props.displayArray !== undefined){
         return(
             <div>
                 <div className='posts-container'>
@@ -37,7 +37,7 @@ const Posts = (props) =>{
                     }} >Create Post</button>
                     </div>
                     <div>
-                        {props.recentPostArray.map((post, index)=>{
+                        {props.displayArray.map((post, index)=>{
                             return(
                                 <Post post = {post} key = {index}/>
                             )
@@ -46,7 +46,7 @@ const Posts = (props) =>{
                 </div>
             </div>
         )
-    }else{
+    }else if(props.displayArray !== undefined){
         return(
             <div>
                 <div className='posts-container'>
@@ -58,7 +58,7 @@ const Posts = (props) =>{
                     }}>Post</button>
                         </div>
                         <div>
-                        {props.recentPostArray.map((post, index)=>{
+                        {props.displayArray.map((post, index)=>{
                             return(
                                 <Post post = {post} key = {index}/>
                             )
@@ -66,6 +66,10 @@ const Posts = (props) =>{
                         </div>
                 </div>
             </div>
+        )
+    }else{
+        return(
+            <div>Loading</div>
         )
     }
 }

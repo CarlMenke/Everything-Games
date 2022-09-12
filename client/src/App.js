@@ -7,15 +7,38 @@ import {Signup } from './components/Signup'
 import {Login } from './components/Login'
 import {Account} from './components/Account'
 import {useState} from 'react'
-import {Route, Routes, useNavigate} from 'react-router-dom'
+import {Route, Routes, useNavigate, useParams} from 'react-router-dom'
 import axios from 'axios';
+import { DiscDetails } from './components/DiscDetails';
 
 
 function App(props) {
   
+
+  let params = useParams()
   const [recentPostArray, setRecentPostArray] = useState([])
   const [logged, setLogged] = useState(false)
   const [loggedUser, setLoggedUser] = useState(null)
+  const [discsArray , setDiscsArray] = useState(null)
+  const [discsArrayAll , setDiscsArrayAll] = useState(null)
+  const [selectedDisc, setSelectedDisc] = useState(null)
+  const [currTopicArray, setCurrTopicArray] = useState([])
+
+
+  const getDiscs = async ()  =>{
+      const response = await axios.get('https://discitapi.herokuapp.com/disc')
+
+      let discPage = [];
+
+      for(let i = 0 ; i < 20; i++){
+        discPage.push(response.data[i])
+      }
+
+      setDiscsArrayAll(response.data)
+
+      console.log('discpage',discPage)
+      setDiscsArray(discPage)
+  }
 
   const getRecentPostArray = async ()=>{
 
@@ -25,19 +48,30 @@ function App(props) {
 
   useEffect(()=>{
     getRecentPostArray()
+    getDiscs()
   },[])
 
-  return (
-    <div className="App">
-      <Header {...props} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/>
-      <Routes>
-        <Route exact path="/" element={<Home {...props} recentPostArray = {recentPostArray} setRecentPostArray = {setRecentPostArray} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/>}/>  
-        <Route exact path="/signup" element={<Signup {...props} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/>}/> 
-        <Route exact path="/login" element = {<Login {...props} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/> }/>      
-        <Route exact path="/account" element = {<Account {...props} getRecentPostArray = {getRecentPostArray} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/> }/>      
-      </Routes>
-    </div>
-  );
+  // useEffect(()=>{
+
+  //   const response = await axios.get('http://localhost:3001/api/recentPosts')
+    
+  // },[selectedDisc])
+
+
+
+  console.log('discsarray',discsArray)
+    return (
+      <div className="App">
+        <Header {...props} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/>
+        <Routes>
+          <Route exact path="/" element={<Home {...props} setSelectedDisc = {setSelectedDisc} getRecentPostArray = {getRecentPostArray} getDiscs = {getDiscs} discsArray = {discsArray} setDiscsArray={setDiscsArray} recentPostArray = {recentPostArray} setRecentPostArray = {setRecentPostArray} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/>}/>  
+          <Route exact path="/signup" element={<Signup {...props} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/>}/> 
+          <Route exact path="/login" element = {<Login {...props} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/> }/>      
+          <Route eaxct path="/disc/details/:discName" element = {<DiscDetails {...props} selectedDisc = {selectedDisc} setSelectedDisc = {setSelectedDisc} discsArray = {discsArray} setDiscsArray={setDiscsArray} navigate ={useNavigate()} recentPostArray = {recentPostArray} setRecentPostArray = {setRecentPostArray} getRecentPostArray = {getRecentPostArray} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} /> }/>      
+          <Route exact path="/account" element = {<Account {...props} getRecentPostArray = {getRecentPostArray} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/> }/>      
+        </Routes>
+      </div>
+    );
 }
 
 export default App;

@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 
 export const Header = (props) =>{
 if(props.logged){
+    
     let nameArr = props.loggedUser.userName.split('');
 
     nameArr[0] = nameArr[0].toUpperCase();

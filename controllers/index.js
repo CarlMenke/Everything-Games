@@ -107,12 +107,14 @@ const createPost = async (req,res) =>{
     try{
         const content = req.params.content;
         const user_id = req.params.user_id;
+        const topic_id = req.params.topic_id;
 
         let currIndex = await PostIndex.find({})
         let  newIndex = Number(currIndex[0].index) + 1
         const response = await PostIndex.updateOne({index:currIndex[0].index}, {$set: {index: newIndex}})
 
         const post  = await new Post({
+            topic_id : topic_id,
             user_id : user_id,
             content : content,
             index : newIndex
