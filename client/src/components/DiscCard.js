@@ -7,7 +7,6 @@ export const DiscCard = (props) =>{
 
     const disc = props.disc;
 
-    props.setSelectedDisc(disc)
 
 if (props.setSelectedDisc !== null){
     return(

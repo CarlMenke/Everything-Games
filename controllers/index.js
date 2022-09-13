@@ -27,6 +27,18 @@ const createUser = async (req,res) =>{
     }
 }
 
+const getPostByTopic = async (req,res) =>{
+
+    try{
+
+        const response = await Post.find({topic_id: req.params.topic_id})
+
+        return res.status(200).json(response)
+    }catch(error){
+        return res.status(500).json({error: error.message})
+    }
+
+}
 
 const checkUser = async (req, res) =>{
     try{
@@ -185,5 +197,6 @@ module.exports = {
     getPostIndex,
     resetPostIndex,
     wipePosts,
-    deleteUserPosts
+    deleteUserPosts,
+    getPostByTopic
 }

@@ -31,6 +31,8 @@ router.get('/wipePosts', controllers.wipePosts)
 
 router.get('/deleteUserPost', controllers.deleteUserPosts)
 
+router.get('/posts-by-topic/:topic_id', controllers.getPostByTopic)
+
 
 module.exports = router
 

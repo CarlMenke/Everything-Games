@@ -24,6 +24,7 @@ function App(props) {
   const [selectedDisc, setSelectedDisc] = useState(null)
   const [currTopicArray, setCurrTopicArray] = useState([])
 
+  console.log(selectedDisc)
 
   const getDiscs = async ()  =>{
       const response = await axios.get('https://discitapi.herokuapp.com/disc')
@@ -46,16 +47,26 @@ function App(props) {
     setRecentPostArray(response.data);
   }
 
+  const getCurrTopicPostArray = async () =>{
+    const response = await axios.get(`http://localhost:3001/api/posts-by-topic/${selectedDisc.name_slug}`)
+
+    setCurrTopicArray(response.data)
+  }
+
   useEffect(()=>{
     getRecentPostArray()
     getDiscs()
   },[])
 
-  // useEffect(()=>{
+  useEffect(()=>{
 
-  //   const response = await axios.get('http://localhost:3001/api/recentPosts')
+    if(selectedDisc !== null){
+    getCurrTopicPostArray();
+    }
     
-  // },[selectedDisc])
+  },[selectedDisc])
+
+
 
 
 
@@ -67,7 +78,7 @@ function App(props) {
           <Route exact path="/" element={<Home {...props} setSelectedDisc = {setSelectedDisc} getRecentPostArray = {getRecentPostArray} getDiscs = {getDiscs} discsArray = {discsArray} setDiscsArray={setDiscsArray} recentPostArray = {recentPostArray} setRecentPostArray = {setRecentPostArray} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/>}/>  
           <Route exact path="/signup" element={<Signup {...props} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/>}/> 
           <Route exact path="/login" element = {<Login {...props} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/> }/>      
-          <Route eaxct path="/disc/details/:discName" element = {<DiscDetails {...props} selectedDisc = {selectedDisc} setSelectedDisc = {setSelectedDisc} discsArray = {discsArray} setDiscsArray={setDiscsArray} navigate ={useNavigate()} recentPostArray = {recentPostArray} setRecentPostArray = {setRecentPostArray} getRecentPostArray = {getRecentPostArray} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} /> }/>      
+          <Route eaxct path="/disc/details/:discName" element = {<DiscDetails {...props} selectedDisc = {selectedDisc} setSelectedDisc = {setSelectedDisc} discsArray = {discsArray} setDiscsArray={setDiscsArray} navigate ={useNavigate()} recentPostArray = {currTopicArray} setRecentPostArray = {setCurrTopicArray} getRecentPostArray = {getRecentPostArray} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} /> }/>      
           <Route exact path="/account" element = {<Account {...props} getRecentPostArray = {getRecentPostArray} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/> }/>      
         </Routes>
       </div>
