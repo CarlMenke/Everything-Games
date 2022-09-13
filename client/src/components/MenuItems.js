@@ -1,5 +1,6 @@
 import React from 'react'
 import { Dropdown } from './Dropdown'
+import {filterBar} from '../filterBar'
 
 export const MenuItems = ({items, dropDown, setDropDown, setDropDownArray, dropDownArray, setDropped, dropped}) =>{
 

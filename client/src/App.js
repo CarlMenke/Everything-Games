@@ -31,11 +31,9 @@ function App(props) {
   const [searchDiscArray, setSearchDiscArray] = useState([])
 
 
-  const [searchFilter, setSearchFilter] = useState({
-    brand:false,category:false,speed:false,glide:false,turn:false,fade:false,stability:false,
-  })
+  const [searchFilter, setSearchFilter] = useState([])
 
-
+ //searchFilter = [{main:brand, sub:dga}, {category:driver}]
 
 
   useEffect(()=>{
@@ -43,12 +41,37 @@ function App(props) {
 
     if(discsArrayAll !== null){
 
-      let filteredArray = discsArrayAll.filter((disc)=>{
-        return disc
-      })
+      console.log('searchfilter in app.js',typeof searchFilter)
+      let filteredArray = []
 
-      let numPages = Math.ceil(filteredArray.length / 40) ;
+      let currArray = discsArrayAll
+
+      if(searchFilter.length > 0){
+        for(let i = 0; i < searchFilter.length; i++){
+
+            filteredArray = currArray.filter((disc)=>{
+              return disc[searchFilter[i].main] === searchFilter[i].sub
+            })
+
+            currArray = filteredArray;
+
+            if(i !== searchFilter.length-1){
+              filteredArray = [];
+            }
+        }
+      }else{
+
+        filteredArray = discsArrayAll.filter((disc)=>{
+          return disc
+        })
+
+      }
+
+      //console.log(filteredArray)
+
+      let numPages = Math.ceil(filteredArray.length / 40);
       setPossiblePages(numPages)
+
 
       for(let i = currPage * 40 - 40; i < currPage * 40; i++){
         if(filteredArray[i]){
@@ -56,14 +79,14 @@ function App(props) {
         }
       }
 
-      setSearchDiscArray(discPage)
 
+      setSearchDiscArray(discPage)
 
     }
 
 
 
-  },[discsArrayAll,currPage])
+  },[discsArrayAll,currPage,searchFilter])
 
 
   const getDiscs = async ()  =>{
@@ -154,7 +177,8 @@ function App(props) {
             setLogged = {setLogged} 
             setLoggedUser = {setLoggedUser} /> }/> 
 
-          <Route eaxct path="/viewDiscs" element = {<Discs {...props} 
+          <Route eaxct path="/viewDiscs" element = {<Discs 
+          {...props} 
             selectedDisc = {selectedDisc} 
             setSelectedDisc = {setSelectedDisc} 
 
@@ -166,10 +190,14 @@ function App(props) {
             setDropped = {setDropped}
 
             discsArrayAll = {discsArrayAll}
-            discsArray = {searchDiscArray} //change to searchDiscArray
+            discsArray = {searchDiscArray} 
             currPage = {currPage}
             setCurrPage = {setCurrPage}
             possiblePages = {possiblePages}
+
+            searchFilter = {searchFilter}
+            setSearchFilter = {setSearchFilter}
+            
 
             setDiscsArray={setDiscsArray} 
             style={'view'}
