@@ -15,7 +15,7 @@ if (props.setSelectedDisc !== null){
             props.setSelectedDisc(disc)
             props.navigate(`/disc/details/${disc.name_slug}`)
         }}
-        className = 'disc-container'>
+        className = {`disc-container-${props.style}`}>
             <div>{disc.name}</div>
             <div>{disc.brand}</div>
             <div>{disc.category}</div>

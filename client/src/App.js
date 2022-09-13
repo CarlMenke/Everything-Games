@@ -6,6 +6,7 @@ import {Header } from './components/Header'
 import {Signup } from './components/Signup'
 import {Login } from './components/Login'
 import {Account} from './components/Account'
+import {Discs} from './components/Discs'
 import {useState} from 'react'
 import {Route, Routes, useNavigate, useParams} from 'react-router-dom'
 import axios from 'axios';
@@ -75,11 +76,88 @@ function App(props) {
       <div className="App">
         <Header {...props} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/>
         <Routes>
-          <Route exact path="/" element={<Home {...props} setSelectedDisc = {setSelectedDisc} getRecentPostArray = {getRecentPostArray} getDiscs = {getDiscs} discsArray = {discsArray} setDiscsArray={setDiscsArray} recentPostArray = {recentPostArray} setRecentPostArray = {setRecentPostArray} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/>}/>  
-          <Route exact path="/signup" element={<Signup {...props} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/>}/> 
-          <Route exact path="/login" element = {<Login {...props} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/> }/>      
-          <Route eaxct path="/disc/details/:discName" element = {<DiscDetails {...props} selectedDisc = {selectedDisc} setSelectedDisc = {setSelectedDisc} discsArray = {discsArray} setDiscsArray={setDiscsArray} navigate ={useNavigate()} recentPostArray = {currTopicArray} setRecentPostArray = {setCurrTopicArray} getRecentPostArray = {getRecentPostArray} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} /> }/>      
-          <Route exact path="/account" element = {<Account {...props} getRecentPostArray = {getRecentPostArray} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/> }/>      
+
+          <Route exact path="/" element={<Home {...props} 
+            setSelectedDisc = {setSelectedDisc} 
+            getRecentPostArray = {getRecentPostArray} 
+            getDiscs = {getDiscs} 
+            discsArray = {discsArray} 
+            setDiscsArray={setDiscsArray} 
+            recentPostArray = {recentPostArray} 
+            setRecentPostArray = {setRecentPostArray} 
+            logged = {logged} loggedUser = {loggedUser} 
+            setLogged = {setLogged} 
+            setLoggedUser = {setLoggedUser} 
+            navigate ={useNavigate()}/>}/>  
+
+
+          <Route exact path="/signup" element={<Signup {...props} 
+            logged = {logged} 
+            loggedUser = {loggedUser} 
+            setLogged = {setLogged} 
+            setLoggedUser = {setLoggedUser} 
+            navigate ={useNavigate()}/>}/> 
+
+
+          <Route exact path="/login" element = {<Login {...props} 
+            logged = {logged} 
+            loggedUser = {loggedUser} 
+            setLogged = {setLogged} 
+            setLoggedUser = {setLoggedUser} 
+            navigate ={useNavigate()}/> }/>      
+
+
+          <Route eaxct path="/disc/details/:discName" element = {<DiscDetails {...props} 
+            selectedDisc = {selectedDisc} 
+            setSelectedDisc = {setSelectedDisc} 
+            discsArray = {discsArray} 
+            setDiscsArray={setDiscsArray} 
+            navigate ={useNavigate()} 
+            recentPostArray = {currTopicArray} 
+            setRecentPostArray = {setCurrTopicArray} 
+            getRecentPostArray = {getRecentPostArray} 
+            style = {'view'}
+            logged = {logged} loggedUser = {loggedUser} 
+            setLogged = {setLogged} 
+            setLoggedUser = {setLoggedUser} /> }/> 
+
+          <Route eaxct path="/viewDiscs" element = {<Discs {...props} 
+            selectedDisc = {selectedDisc} 
+            setSelectedDisc = {setSelectedDisc} 
+            discsArray = {discsArray} 
+            setDiscsArray={setDiscsArray} 
+            style={'view'}
+            navigate ={useNavigate()} 
+            recentPostArray = {currTopicArray} 
+            setRecentPostArray = {setCurrTopicArray} 
+            getRecentPostArray = {getRecentPostArray} 
+            logged = {logged} loggedUser = {loggedUser} 
+            setLogged = {setLogged} 
+            setLoggedUser = {setLoggedUser} /> }/> 
+
+
+          <Route eaxct path="/disc/details/:discName" element = {<DiscDetails {...props} 
+            selectedDisc = {selectedDisc} 
+            setSelectedDisc = {setSelectedDisc} 
+            discsArray = {discsArray} 
+            setDiscsArray={setDiscsArray} 
+            navigate ={useNavigate()} 
+            recentPostArray = {currTopicArray} 
+            setRecentPostArray = {setCurrTopicArray} 
+            getRecentPostArray = {getRecentPostArray} 
+            logged = {logged} loggedUser = {loggedUser} 
+            setLogged = {setLogged} 
+            setLoggedUser = {setLoggedUser} /> }/> 
+
+
+          <Route exact path="/account" element = {<Account {...props} 
+            getRecentPostArray = {getRecentPostArray} 
+            logged = {logged} 
+            loggedUser = {loggedUser} 
+            setLogged = {setLogged} 
+            setLoggedUser = {setLoggedUser} 
+            navigate ={useNavigate()}/> }/>   
+
         </Routes>
       </div>
     );

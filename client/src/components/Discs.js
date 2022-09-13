@@ -15,14 +15,13 @@ export const Discs = (props) =>{
     if(discsArray != null){
         return(
             <div>
-            <div className = 'discs-display'>
+            <div className = {`discs-display-${props.style}`}>
                 {discsArray.map((disc,index) =>{
                     return(
-                        <DiscCard disc = {disc} navigate ={props.navigate} key = {index} setSelectedDisc = {props.setSelectedDisc}/>
+                        <DiscCard disc = {disc} navigate ={props.navigate} key = {index} setSelectedDisc = {props.setSelectedDisc} style = {props.style}/>
                     )
                 })}
             </div>
-            <button>View All</button>
             </div>
         )
     }else{return(

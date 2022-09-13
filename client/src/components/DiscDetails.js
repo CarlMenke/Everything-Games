@@ -18,9 +18,10 @@ if(props.discsArray !== null && props.recentPostsArray !== null && props.selecte
             <div className = 'disc-details'>
                 <div>{props.selectedDisc.name}</div>
                 <div>{props.selectedDisc.category}</div>
+                <img src = {props.selectedDisc.pic}></img>
             </div>
             <div className = 'disc-posts'>
-                <Posts {...props} logged = {props.logged} loggedUser = {props.loggedUser} displayArray = {props.recentPostArray} setRecentPostArray = {props.setRecentPostArray} currTopic = {props.selectedDisc.name_slug}/>
+                <Posts {...props} logged = {props.logged} style = {'view'} loggedUser = {props.loggedUser} displayArray = {props.recentPostArray} setRecentPostArray = {props.setRecentPostArray} currTopic = {props.selectedDisc.name_slug}/>
             </div>
         </div>
     )
