@@ -35,6 +35,7 @@ function App(props) {
 
   useEffect(()=>{
 
+
     let discPage = [];
 
 
@@ -62,6 +63,7 @@ function App(props) {
     }
 
 
+
   },[discsArrayAll,currPage])
 
 
@@ -77,8 +79,6 @@ function App(props) {
       setDiscsArrayAll(response.data)
       setDiscsArray(discPage)
   }
-
-
 
 
 
@@ -165,7 +165,7 @@ function App(props) {
             setSelectedDisc = {setSelectedDisc} 
 
 
-
+            discsArrayAll = {discsArrayAll}
             discsArray = {searchDiscArray} //change to searchDiscArray
             currPage = {currPage}
             setCurrPage = {setCurrPage}
