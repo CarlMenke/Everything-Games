@@ -118,3 +118,33 @@ margin: 10px;
   display:inline;
   margin: 20px;
 }
+
+
+.menu-item{
+  font-size:30px;
+  text-decoration:none;
+  display: inline;
+  margin: 20px;
+}
+
+.menu-items{
+  list-style: none;
+  border:0px;
+}
+
+.dropdown{
+   display:none;
+}
+.dropdown-show{
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.filter-options{
+  display: flex;
+  flex-flow: row nowrap;
+}
+.filter-container{
+  display: flex;
+  flex-flow: column nowrap;
+}

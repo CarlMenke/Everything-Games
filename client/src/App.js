@@ -15,8 +15,9 @@ import { DiscDetails } from './components/DiscDetails';
 
 function App(props) {
   
-
-  let params = useParams()
+  const [dropdown, setDropDown] = useState(true)
+  const [dropDownArray, setDropDownArray] = useState([])
+  const [dropped, setDropped] = useState('')
   const [recentPostArray, setRecentPostArray] = useState([])
   const [logged, setLogged] = useState(false)
   const [loggedUser, setLoggedUser] = useState(null)
@@ -28,16 +29,17 @@ function App(props) {
   const [possiblePages, setPossiblePages] = useState([])
   const [currPage, setCurrPage] = useState(1)
   const [searchDiscArray, setSearchDiscArray] = useState([])
+
+
   const [searchFilter, setSearchFilter] = useState({
     brand:false,category:false,speed:false,glide:false,turn:false,fade:false,stability:false,
   })
 
 
+
+
   useEffect(()=>{
-
-
     let discPage = [];
-
 
     if(discsArrayAll !== null){
 
@@ -46,10 +48,7 @@ function App(props) {
       })
 
       let numPages = Math.ceil(filteredArray.length / 40) ;
-
-
       setPossiblePages(numPages)
-
 
       for(let i = currPage * 40 - 40; i < currPage * 40; i++){
         if(filteredArray[i]){
@@ -81,10 +80,6 @@ function App(props) {
   }
 
 
-
-
-
-
   const getRecentPostArray = async ()=>{
 
     const response = await axios.get('http://localhost:3001/api/recentPosts')
@@ -110,8 +105,7 @@ function App(props) {
     
   },[selectedDisc])
 
-  console.log('discsarray',discsArray)
-    return (
+  return (
       <div className="App">
         <Header {...props} logged = {logged} loggedUser = {loggedUser} setLogged = {setLogged} setLoggedUser = {setLoggedUser} navigate ={useNavigate()}/>
         <Routes>
@@ -164,6 +158,12 @@ function App(props) {
             selectedDisc = {selectedDisc} 
             setSelectedDisc = {setSelectedDisc} 
 
+            dropDown = {dropdown}
+            setDropDown  = {setDropDown}
+            dropDownArray = {dropDownArray}
+            setDropDownArray  = {setDropDownArray}
+            dropped = {dropped}
+            setDropped = {setDropped}
 
             discsArrayAll = {discsArrayAll}
             discsArray = {searchDiscArray} //change to searchDiscArray

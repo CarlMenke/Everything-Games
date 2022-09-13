@@ -3,9 +3,13 @@ import {useState, useEffect} from 'react'
 import axios from 'axios'
 import Posts from './Posts'
 import {DiscCard } from './DiscCard'
+import { MenuItems } from './MenuItems'
+import { Dropdown } from './Dropdown'
 
 export const Discs = (props) =>{
 
+
+    let filterBar =[]
     const discsArrayAll = props.discsArrayAll
     if(discsArrayAll !== undefined && discsArrayAll !== null){
 
@@ -264,7 +268,7 @@ export const Discs = (props) =>{
         {title: '15', onClick: undefined}
     ]
 
-    const filterBar = [
+     filterBar = [
         {
             title: 'Brand',
             url: '/brand',
@@ -280,7 +284,7 @@ export const Discs = (props) =>{
         {
             title: 'Speed',
             url: '/speed',
-            submenu:speedSubmenu
+            submenu:speedSubmenu 
         },
 
         {
@@ -310,16 +314,12 @@ export const Discs = (props) =>{
 }
 
     const discsArray = props.discsArray;
-
-    console.log(props.possiblePages)
     let currPage = props.currPage
     let possiblePagesArray = []
 
     if(currPage < 6){
         possiblePagesArray = [1,2,3,4,5,6,7,8,9,10]
     }else if(currPage > props.possiblePages - 6){
-
-
         for(let i = 9; i >= 0; i--){
             possiblePagesArray.push(props.possiblePages - i)
         }
@@ -335,18 +335,32 @@ export const Discs = (props) =>{
             return(
                 <div>
                     <div className = 'search-bar'>
-
-                        <div>
-                            <div>Sort By: </div>
-                            <button>Brand</button>
-                            <button>Category</button>
-                            <button>Speed</button>
-                            <button>Glide</button>
-                            <button>Turn</button>
-                            <button>Fade</button>
-                            <button>Stability</button>
+                        <div className = 'filter-container'>
+                            <ul className = 'filter-options'>
+                                Sort By: 
+                                {filterBar.map((item,index)=>{
+                                    return(
+                                        <MenuItems  
+                                            dropDownArray = {props.dropDownArray} 
+                                            setDropDownArray = {props.setDropDownArray} 
+                                            setDropDown = {props.setDropDown} 
+                                            dropDown = {props.dropDown}
+                                            key = {index} 
+                                            items = {item}
+                                            dropped = {props.dropped}
+                                            setDropped = {props.setDropped}
+                                        />
+                                    )
+                                })}
+                            </ul>
+                            <Dropdown 
+                                dropped = {props.dropped}
+                                setDropDown = {props.setDropDown} 
+                                dropDown = {props.dropDown} 
+                                dropDownArray = {props.dropDownArray} 
+                                setDropDownArray = {props.setDropDownArray} 
+                            />
                         </div>
-
                         <div>
                             <input id = 'disc-search-input' placeholder = 'Search By Name'></input>
                             <button>Search</button>
@@ -355,7 +369,13 @@ export const Discs = (props) =>{
                 <div className = {`discs-display-${props.style}`}>
                     {discsArray.map((disc,index) =>{
                         return(
-                            <DiscCard disc = {disc} navigate ={props.navigate} key = {index} setSelectedDisc = {props.setSelectedDisc} style = {props.style}/>
+                            <DiscCard 
+                                disc = {disc} 
+                                navigate ={props.navigate} 
+                                key = {index} 
+                                setSelectedDisc = {props.setSelectedDisc} 
+                                style = {props.style}
+                            />
                         )
                     })}
                 </div>
@@ -380,12 +400,15 @@ export const Discs = (props) =>{
                     page++;
                     if(currPage < props.possiblePages) {props.setCurrPage(page)}
                 }}>Next Page</button>
-
-
                 </div>
+                
             )
         }else{return(
-            <div>Loading</div>
+            <div>
+                <div>Loading</div>
+                <button>Back</button>
+            </div>
+            
         )}
     }else{
         if(discsArray != null){
@@ -401,7 +424,10 @@ export const Discs = (props) =>{
                 </div>
             )
         }else{return(
-            <div>Loading</div>
+                        <div>
+                <div>Loading</div>
+                <button>Back</button>
+            </div>
         )}
     }
 }
