@@ -23,16 +23,27 @@ export const Home = (props) =>{
                 <div>Courses </div>
                 <div> Recent Posts
                     <div>
-                        <Posts logged = {props.logged} loggedUser = {props.loggedUser} displayArray = {props.recentPostArray} setRecentPostArray = {props.setRecentPostArray} currTopic = {'general'}/>
+                        <Posts logged = {props.logged} 
+                        loggedUser = {props.loggedUser} 
+                        displayArray = {props.recentPostArray} 
+                        setRecentPostArray = {props.setRecentPostArray} 
+                        currTopic = {'general'}/>
                     </div>
                 </div>
                     <div>
                         <h1>Discs</h1>
-                        <Discs {...props} style = {'home'}navigate ={props.navigate} discsArray = {props.discsArray} setDiscsArray= {props.setDiscsArray} setSelectedDisc = {props.setSelectedDisc}/>
                         <button
                         onClick = {()=>{
                             navigate('/viewDiscs')
                         }}>View All</button>
+                            <Discs {...props} 
+                                pageAble = {false} 
+                                style = {'home'}
+                                navigate ={props.navigate} 
+                                discsArray = {props.discsArray} 
+                                setDiscsArray= {props.setDiscsArray} 
+                                setSelectedDisc = {props.setSelectedDisc}
+                            />
                     </div>
             </section>
         </div>

@@ -25,7 +25,45 @@ function App(props) {
   const [selectedDisc, setSelectedDisc] = useState(null)
   const [currTopicArray, setCurrTopicArray] = useState([])
 
-  console.log(selectedDisc)
+  const [possiblePages, setPossiblePages] = useState([])
+  const [currPage, setCurrPage] = useState(1)
+  const [searchDiscArray, setSearchDiscArray] = useState([])
+  const [searchFilter, setSearchFilter] = useState({
+    brand:false,category:false,speed:false,glide:false,turn:false,fade:false,stability:false,
+  })
+
+
+  useEffect(()=>{
+
+    let discPage = [];
+
+
+    if(discsArrayAll !== null){
+
+      let filteredArray = discsArrayAll.filter((disc)=>{
+        return disc
+      })
+
+      let numPages = Math.ceil(filteredArray.length / 40) ;
+
+
+      setPossiblePages(numPages)
+
+
+      for(let i = currPage * 40 - 40; i < currPage * 40; i++){
+        if(filteredArray[i]){
+        discPage.push(filteredArray[i])
+        }
+      }
+
+      setSearchDiscArray(discPage)
+
+
+    }
+
+
+  },[discsArrayAll,currPage])
+
 
   const getDiscs = async ()  =>{
       const response = await axios.get('https://discitapi.herokuapp.com/disc')
@@ -37,10 +75,15 @@ function App(props) {
       }
 
       setDiscsArrayAll(response.data)
-
-      console.log('discpage',discPage)
       setDiscsArray(discPage)
   }
+
+
+
+
+
+
+
 
   const getRecentPostArray = async ()=>{
 
@@ -66,10 +109,6 @@ function App(props) {
     }
     
   },[selectedDisc])
-
-
-
-
 
   console.log('discsarray',discsArray)
     return (
@@ -124,9 +163,17 @@ function App(props) {
           <Route eaxct path="/viewDiscs" element = {<Discs {...props} 
             selectedDisc = {selectedDisc} 
             setSelectedDisc = {setSelectedDisc} 
-            discsArray = {discsArray} 
+
+
+
+            discsArray = {searchDiscArray} //change to searchDiscArray
+            currPage = {currPage}
+            setCurrPage = {setCurrPage}
+            possiblePages = {possiblePages}
+
             setDiscsArray={setDiscsArray} 
             style={'view'}
+            pageAble = {true}
             navigate ={useNavigate()} 
             recentPostArray = {currTopicArray} 
             setRecentPostArray = {setCurrTopicArray} 

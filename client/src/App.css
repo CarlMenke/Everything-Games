@@ -85,7 +85,7 @@ margin: 10px;
   overflow-x: scroll;
   margin: 20px;
   padding: 20px;
-  height: 600px;
+  height: 720px;
   justify-content:space-between;
 }
 
@@ -107,5 +107,14 @@ margin: 10px;
   background-color: grey;
   padding: 5px;
   margin: 10px;
-  width: 25%;
+  width: 20%;
+}
+.search-bar{
+  display:flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+.inline{
+  display:inline;
+  margin: 20px;
 }
