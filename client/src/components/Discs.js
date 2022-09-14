@@ -39,19 +39,14 @@ export const Discs = (props) =>{
     }
 
     const searchFilter = props.searchFilter
-    console.log('searchfilter in discs.js' , typeof searchFilter)
 
     const removeFilter = (index) =>{
-        console.log('searchFilter', typeof searchFilter)
 
         let arr = []
         arr.push(props.searchFilter);
 
-        console.log('arr',typeof arr)
 
         arr.splice(index,1)
-
-        console.log('props.setSearchFilter',props.setSearchFilter)
 
         props.setSearchFilter(arr);
     }
@@ -76,6 +71,7 @@ export const Discs = (props) =>{
     if(props.pageAble){
         if(discsArray != null){
 
+            console.log(searchFilter)
             return(
                 <div>
                     <div className = 'search-bar'>

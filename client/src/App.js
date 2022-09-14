@@ -33,7 +33,6 @@ function App(props) {
 
   const [searchFilter, setSearchFilter] = useState([])
 
- //searchFilter = [{main:brand, sub:dga}, {category:driver}]
 
 
   useEffect(()=>{
@@ -41,7 +40,6 @@ function App(props) {
 
     if(discsArrayAll !== null){
 
-      console.log('searchfilter in app.js',typeof searchFilter)
       let filteredArray = []
 
       let currArray = discsArrayAll
