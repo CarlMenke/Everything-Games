@@ -6,12 +6,15 @@ import {DiscCard } from './DiscCard'
 import { MenuItems } from './MenuItems'
 import { Dropdown } from './Dropdown'
 import {filterBar} from '../filterBar'
+import e from 'cors'
 
 
 export const Discs = (props) =>{
     
-    const discsArrayAll = props.discsArrayAll
+    const [searchValue, setSearchValue] = useState('');
+    const [searched,setSearched]= useState(false);
 
+    const discsArrayAll = props.discsArrayAll
     if(discsArrayAll !== undefined && discsArrayAll !== null){
 
     const getDetails = (spec) =>{
@@ -40,38 +43,59 @@ export const Discs = (props) =>{
 
     const searchFilter = props.searchFilter
 
-    const removeFilter = (index) =>{
-
+    const removeFilter = (filter) =>{
+        const index = props.searchFilter.indexOf(filter)
         let arr = []
-        arr.push(props.searchFilter);
-
-
+        arr.push(...props.searchFilter);
         arr.splice(index,1)
-
         props.setSearchFilter(arr);
+        props.setDropDown((prev) => !prev)
+    }
+
+
+    useEffect(()=>{
+        if(searchValue !== ''){
+            const results = discsArrayAll.filter((disc) =>{
+                return disc.name.toLowerCase().includes(searchValue.toLowerCase())
+            })
+
+            console.log(results)
+            props.setSearched((prev) => !prev)
+            props.setManualSearch(results)
+        }
+    },[searched])
+
+    const handleSubmit = (e)=>{
+        e.preventDefault();
+        setSearched(true)
     }
 
     const discsArray = props.discsArray;
     let currPage = props.currPage
     let possiblePagesArray = []
 
-    if(currPage < 6){
-        possiblePagesArray = [1,2,3,4,5,6,7,8,9,10]
-    }else if(currPage > props.possiblePages - 6){
-        for(let i = 9; i >= 0; i--){
-            possiblePagesArray.push(props.possiblePages - i)
+    if(props.possiblePages < 11){
+        for(let i = 1; i < props.possiblePages+1; i++){
+            possiblePagesArray.push(i)
         }
 
     }else{
-        for(let i = currPage - 5; i < currPage + 5; i++){
-            possiblePagesArray.push(i);
+        if(currPage < 6){
+            possiblePagesArray = [1,2,3,4,5,6,7,8,9,10]
+        }else if(currPage > props.possiblePages - 6){
+            for(let i = 9; i >= 0; i--){
+                possiblePagesArray.push(props.possiblePages - i)
+            }
+
+        }else{
+            for(let i = currPage - 5; i < currPage + 5; i++){
+                possiblePagesArray.push(i);
+            }
         }
     }
 
     if(props.pageAble){
         if(discsArray != null){
-
-            console.log(searchFilter)
             return(
                 <div>
                     <div className = 'search-bar'>
@@ -99,7 +123,7 @@ export const Discs = (props) =>{
                                             <div key = {index} className = 'inline'>
                                                 <div className = 'inline'>{filter.main}</div>
                                                 <div className = 'inline'>{filter.sub}</div>
-                                                <button type = 'button' onClick = {()=>{removeFilter(index)}}>❌</button>
+                                                <button type = 'button' onClick = {()=>{removeFilter(filter)}}>❌</button>
                                             </div>
                                         )
                                     })}
@@ -117,8 +141,14 @@ export const Discs = (props) =>{
                             />
                         </div>
                         <div>
-                            <input id = 'disc-search-input' placeholder = 'Search By Name'></input>
-                            <button>Search</button>
+                            <form onSubmit = {handleSubmit}>
+                                <input onChange ={(e)=>{setSearchValue(e.target.value)}}
+                                    id = 'disc-search-input' 
+                                    placeholder = 'Search By Name' 
+                                    type = 'form'>
+                                </input>
+                                <button type= 'submit'>Search</button>
+                            </form>
                         </div>
                     </div>
                 <div className = {`discs-display-${props.style}`}>

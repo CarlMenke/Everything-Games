@@ -19,6 +19,7 @@ if(props.discsArray !== null && props.recentPostsArray !== null && props.selecte
             <div className = 'disc-details'>
                 <div>{props.selectedDisc.name}</div>
                 <div>{props.selectedDisc.category}</div>
+                <div className = 'disc' style={{backgroundColor:`${[props.selectedDisc.color]}`}}>{props.selectedDisc.name}</div>
                 <img src = {props.selectedDisc.pic}></img>
             </div>
             <button onClick = {()=>{

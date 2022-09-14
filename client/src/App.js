@@ -32,6 +32,9 @@ function App(props) {
 
 
   const [searchFilter, setSearchFilter] = useState([])
+  const [manualSearch, setManualSearch] = useState(null)
+  const [searched,setSearched]= useState(false);
+
 
 
 
@@ -45,11 +48,20 @@ function App(props) {
       let currArray = discsArrayAll
 
       if(searchFilter.length > 0){
+
+        if(manualSearch !== null){
+          filteredArray = manualSearch
+        }
+
         for(let i = 0; i < searchFilter.length; i++){
 
             filteredArray = currArray.filter((disc)=>{
               return disc[searchFilter[i].main] === searchFilter[i].sub
             })
+
+            if(manualSearch !== null){
+              filteredArray = manualSearch
+            }
 
             currArray = filteredArray;
 
@@ -63,28 +75,26 @@ function App(props) {
           return disc
         })
 
-      }
+        if(manualSearch !== null){
+          filteredArray = manualSearch
+        }
 
-      //console.log(filteredArray)
+      }
 
       let numPages = Math.ceil(filteredArray.length / 40);
       setPossiblePages(numPages)
-
 
       for(let i = currPage * 40 - 40; i < currPage * 40; i++){
         if(filteredArray[i]){
         discPage.push(filteredArray[i])
         }
       }
-
-
       setSearchDiscArray(discPage)
-
+      setManualSearch(null)
     }
 
+  },[discsArrayAll,currPage,searchFilter, searched])
 
-
-  },[discsArrayAll,currPage,searchFilter])
 
 
   const getDiscs = async ()  =>{
@@ -186,17 +196,20 @@ function App(props) {
             setDropDownArray  = {setDropDownArray}
             dropped = {dropped}
             setDropped = {setDropped}
+            manualSearch = {manualSearch}
+            setManualSearch = {setManualSearch}
 
             discsArrayAll = {discsArrayAll}
             discsArray = {searchDiscArray} 
             currPage = {currPage}
             setCurrPage = {setCurrPage}
             possiblePages = {possiblePages}
+            setSearched = {setSearched}
 
             searchFilter = {searchFilter}
             setSearchFilter = {setSearchFilter}
             
-
+            setSearchDiscArray ={setSearchDiscArray}
             setDiscsArray={setDiscsArray} 
             style={'view'}
             pageAble = {true}
@@ -207,6 +220,7 @@ function App(props) {
             logged = {logged} loggedUser = {loggedUser} 
             setLogged = {setLogged} 
             setLoggedUser = {setLoggedUser} /> }/> 
+
 
 
           <Route eaxct path="/disc/details/:discName" element = {<DiscDetails {...props} 

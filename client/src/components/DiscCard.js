@@ -8,7 +8,7 @@ export const DiscCard = (props) =>{
     const disc = props.disc;
 
 
-if (props.setSelectedDisc !== null){
+if (props.setSelectedDisc !== null ){
     return(
         <div 
         onClick = {()=>{

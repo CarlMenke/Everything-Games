@@ -85,7 +85,7 @@ margin: 10px;
   overflow-x: scroll;
   margin: 20px;
   padding: 20px;
-  height: 720px;
+  height: 700px;
   justify-content:space-between;
 }
 
@@ -148,4 +148,9 @@ margin: 10px;
 .filter-container{
   display: flex;
   flex-flow: column nowrap;
+}
+.disc{
+  border-radius:50%;
+  width:50px;
+  height:50px;
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Dropdown = ({dropDownArray,dropDown, dropped, filterBar, searchFilter, setSearchFilter}) =>{
+export const Dropdown = ({dropDownArray, setDropDown, dropDown, dropped, filterBar, searchFilter, setSearchFilter}) =>{
 
     return(
         <ul className = {`dropdown${dropDown?'show':''}`}>
@@ -34,6 +34,8 @@ export const Dropdown = ({dropDownArray,dropDown, dropped, filterBar, searchFilt
                         obj.sub = currSub[0].title
 
                         setSearchFilter([...searchFilter, obj])
+                        setDropDown((prev) => !prev)
+
                         
                     }}>
                         {submenu.title}
