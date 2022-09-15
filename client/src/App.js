@@ -35,6 +35,8 @@ function App(props) {
   const [manualSearch, setManualSearch] = useState(null)
   const [searched,setSearched]= useState(false);
 
+  const [bagDiscs , setBagDiscs] = useState(null)
+
 
 
 
@@ -152,7 +154,10 @@ function App(props) {
             logged = {logged} loggedUser = {loggedUser} 
             setLogged = {setLogged} 
             setLoggedUser = {setLoggedUser} 
-            navigate ={useNavigate()}/>}/>  
+            navigate ={useNavigate()}
+            bagDiscs = {bagDiscs}
+            setBagDiscs = {setBagDiscs}
+            />}/>  
 
 
           <Route exact path="/signup" element={<Signup {...props} 
@@ -186,10 +191,9 @@ function App(props) {
             setLoggedUser = {setLoggedUser} /> }/> 
 
           <Route eaxct path="/viewDiscs" element = {<Discs 
-          {...props} 
+            {...props} 
             selectedDisc = {selectedDisc} 
             setSelectedDisc = {setSelectedDisc} 
-
             dropDown = {dropdown}
             setDropDown  = {setDropDown}
             dropDownArray = {dropDownArray}
@@ -198,17 +202,14 @@ function App(props) {
             setDropped = {setDropped}
             manualSearch = {manualSearch}
             setManualSearch = {setManualSearch}
-
             discsArrayAll = {discsArrayAll}
             discsArray = {searchDiscArray} 
             currPage = {currPage}
             setCurrPage = {setCurrPage}
             possiblePages = {possiblePages}
             setSearched = {setSearched}
-
             searchFilter = {searchFilter}
             setSearchFilter = {setSearchFilter}
-            
             setSearchDiscArray ={setSearchDiscArray}
             setDiscsArray={setDiscsArray} 
             style={'view'}
@@ -219,7 +220,10 @@ function App(props) {
             getRecentPostArray = {getRecentPostArray} 
             logged = {logged} loggedUser = {loggedUser} 
             setLogged = {setLogged} 
-            setLoggedUser = {setLoggedUser} /> }/> 
+            setLoggedUser = {setLoggedUser} 
+            bagDiscs = {bagDiscs}
+            setBagDiscs = {setBagDiscs}
+            /> }/> 
 
 
 
@@ -251,8 +255,3 @@ function App(props) {
 }
 
 export default App;
-
-
-
-
-//////////////////////////NEXT IS MAKE THE RECENT POST ARRAY GET INITALIZED WITH A GET REQUEST OF THE 20 MOST RECENT POSTS so that it is there everytime the page is loaded

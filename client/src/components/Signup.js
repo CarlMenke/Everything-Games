@@ -10,8 +10,11 @@ export const Signup = (props) =>{
 
 
     async function createUser(){
+
         if(newUserName != ''){
-            const response = await axios.get(`http://localhost:3001/api/newUser/${newUserName}/${newUserPassword}/${newUserProfilePic}`)
+
+            const response = await axios.post(`http://localhost:3001/api/newUser/${newUserName}/${newUserPassword}`, {profilePic:newUserProfilePic})
+            console.log(response)
         }
 
     }

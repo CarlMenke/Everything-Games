@@ -49,7 +49,6 @@ export const Discs = (props) =>{
         arr.push(...props.searchFilter);
         arr.splice(index,1)
         props.setSearchFilter(arr);
-        props.setDropDown((prev) => !prev)
     }
 
 

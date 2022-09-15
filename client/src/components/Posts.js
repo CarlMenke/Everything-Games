@@ -4,8 +4,7 @@ import axios from 'axios'
 import Post from './Post'
 
 const Posts = (props) =>{
-
-    const postArray = props.postArray;
+    
     const [creatingPost , setCreatingPost] = useState(false);
     const [newPostContent, setNewPostContent] = useState('');
 

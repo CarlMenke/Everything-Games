@@ -11,23 +11,43 @@ export const Home = (props) =>{
 
 
       useEffect(()=>{
-        props.getRecentPostArray()
-        props.getDiscs()
+          props.getRecentPostArray()
+          props.getDiscs()
+          if(props.loggedUser){
+            props.setBagDiscs(props.loggedUser.userDiscs)
+            getBagDiscs()
+          }
       },[])
+
+      const getBagDiscs = async () =>{
+        const user = await axios.get(`http://localhost:3001/api/user/${props.loggedUser._id}`)
+
+        props.setBagDiscs(user.data[0].userDiscs)
+      }
 
 
     return(
         <div>
             <h1>Home Page</h1>
             <section className = "home-main">
-                <div>Courses </div>
+                <div>Your Bag 
+                <Discs {...props} 
+                                pageAble = {false} 
+                                style = {'home'}
+                                navigate ={props.navigate} 
+                                discsArray = {props.bagDiscs} 
+                                setDiscsArray= {props.setBagDiscs} 
+                                setSelectedDisc = {props.setSelectedDisc}
+                            />
+                </div>
+                
                 <div> Recent Posts
                     <div>
                         <Posts logged = {props.logged} 
-                        loggedUser = {props.loggedUser} 
-                        displayArray = {props.recentPostArray} 
-                        setRecentPostArray = {props.setRecentPostArray} 
-                        currTopic = {'general'}/>
+                            loggedUser = {props.loggedUser} 
+                            displayArray = {props.recentPostArray} 
+                            setRecentPostArray = {props.setRecentPostArray} 
+                            currTopic = {'general'}/>
                     </div>
                 </div>
                     <div>

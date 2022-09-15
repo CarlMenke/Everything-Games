@@ -1,27 +1,44 @@
-const { db, rawListeners } = require('../models/user');
+
 const User = require('../models/user')
 const Post = require('../models/post')
 const PostIndex = require('../models/postindex')
 const bcrypt = require('bcrypt');
-const postindex = require('../models/postindex');
 
 
 
 // used to create a new user
+
 const createUser = async (req,res) =>{
 
-    const userName = req.params.userName;  
-    const password = await bcrypt.hash(req.params.password,10);
-    const profilePic = req.params.profilePic;
     try{
-        const user = await new User({
+
+        const userName = req.params.userName;  
+        let profilePic = req.body.profilePic;
+
+        function isImage(url) {
+            return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
+          }
+
+        if(!isImage(profilePic)){
+            profilePic = 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg'
+        }
+
+        const password = await bcrypt.hash(req.params.password,10);
+
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Credentials", "true");
+        res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+        
+        const user =  new User({
             userName : userName,
             password : password,
             profilePic : profilePic
         })
         await user.save();
-        await console.log(User)
-        return res.status(200).json({user})
+
+        return res.status(200).json({user}).headers
+
     }catch(error) {
         return res.status(500).json({error: error.message})
     }
@@ -30,8 +47,31 @@ const createUser = async (req,res) =>{
 const getPostByTopic = async (req,res) =>{
 
     try{
-
         const response = await Post.find({topic_id: req.params.topic_id})
+
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Credentials", "true");
+        res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+        
+
+        return res.status(200).json(response)
+    }catch(error){
+        return res.status(500).json({error: error.message})
+    }
+
+}
+
+const getPostByUser = async (req,res) =>{
+
+    try{
+        const response = await Post.find({user_id: req.params.user_id})
+        console.log(response)
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Credentials", "true");
+        res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+        
 
         return res.status(200).json(response)
     }catch(error){
@@ -44,6 +84,11 @@ const checkUser = async (req, res) =>{
     try{
         const userName  = req.params.userName
         const user = await User.find({userName:userName})
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Credentials", "true");
+        res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+        
 
         if (user.length < 1){
             res.status(200).send({exists: false})
@@ -57,16 +102,28 @@ const checkUser = async (req, res) =>{
         res.status(500).send({error:error.message})
     }
 }
+
 const getAllUsers = async (req, res) =>{
     try{
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Credentials", "true");
+        res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+        
         const users = await User.find({})
         return res.status(200).send(users)
     }catch(error){
         res.status(500).send({error:error.message})
     }
 }
+
 const getUser = async (req,res)=>{
     try{
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Credentials", "true");
+        res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+        
         const user = await User.find({_id:`${req.params.id}`})
         return res.status(200).send(user)
     }catch(error){
@@ -76,6 +133,11 @@ const getUser = async (req,res)=>{
 
 const deleteUser = async (req, res )=>{
     try{
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Credentials", "true");
+        res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+        
         console.log(req.params.id)
         const deletedPost = await Post.deleteMany({user_id:`${req.params.id}`})
 
@@ -89,6 +151,11 @@ const deleteUser = async (req, res )=>{
 
 const updateUser = async (req, res )=>{
     try{
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Credentials", "true");
+        res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+        
         await User.updateOne({_id:`${req.params.id}`},{userName:`${req.params.newName}`})
         return res.status(200).send(`Your User Name has been succesfully updated to ${req.params.newName}.`)
     }catch(error){
@@ -100,6 +167,11 @@ const getRecentPosts = async(req,res) =>{
 
     let rescentPostArray = []
     try{
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Credentials", "true");
+        res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+        
         const response = await Post.find({});
         
         response.sort((a,b) =>{
@@ -114,9 +186,13 @@ const getRecentPosts = async(req,res) =>{
     }
 }
 
-
 const createPost = async (req,res) =>{
     try{
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Credentials", "true");
+        res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+        
         const content = req.params.content;
         const user_id = req.params.user_id;
         const topic_id = req.params.topic_id;
@@ -143,6 +219,11 @@ const createPost = async (req,res) =>{
 const getPostIndex = async (req,res) =>{
 
     try{
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Credentials", "true");
+        res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+        
         const response = await PostIndex.find({})
         res.status(200).send(response)
     }catch(error){
@@ -153,6 +234,11 @@ const getPostIndex = async (req,res) =>{
 const resetPostIndex = async(req,res) =>{
 
     try{
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Credentials", "true");
+        res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+        
         const response = await PostIndex.updateOne({}, {index: 0})
 
         res.status(200).send(response[0].index)
@@ -164,6 +250,11 @@ const resetPostIndex = async(req,res) =>{
 
 const wipePosts = async(req,res) =>{
     try{
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Credentials", "true");
+        res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+        
         const response = await Post.deleteMany({})
 
         res.status(200).send(response)
@@ -174,6 +265,11 @@ const wipePosts = async(req,res) =>{
 
 const deleteUserPosts = async (req, res )=>{
     try{
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Credentials", "true");
+        res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+        
         await Post.deleteMany({user_id:`${req.params.id}`})
 
         return res.status(200).send('All Posts successfully deleted')
@@ -182,6 +278,29 @@ const deleteUserPosts = async (req, res )=>{
     }
 }
 
+const addDiscToUser = async (req,res) =>{
+    try{
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Credentials", "true");
+        res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+
+
+        const newDisc = req.body.disc
+        let newDiscArray = [];
+
+        const user = await User.find({_id:`${req.params.id}`})
+        newDiscArray = [...user[0].userDiscs, newDisc]
+
+
+        const response = await User.updateOne({_id:`${req.params.id}`}, { $set: {'userDiscs': newDiscArray}})
+
+        return res.status(200).send(response)
+
+    }catch(error){
+        res.status(500).json({error:error.message})
+    }
+}
 
 
 //exports  controller funcitons
@@ -198,5 +317,7 @@ module.exports = {
     resetPostIndex,
     wipePosts,
     deleteUserPosts,
-    getPostByTopic
+    getPostByTopic,
+    getPostByUser,
+    addDiscToUser,
 }

@@ -15,9 +15,14 @@ if(props.logged){
     const displayName = nameArr.join('')
 
     return(
-        <div className = 'header'>
-        <Link to = "/" className = 'header-link'>Home</Link>
-        <Link to = "/account" className = 'header-link'>Hello {displayName}!</Link>
+        <div className = 'header-logged'>
+            <div>
+                <Link to = "/" className = 'header-link'>Home</Link>
+            </div>
+            <div>
+                <Link to = "/account" className = 'header-link'>Hello {displayName}!</Link>
+                <img  className = 'account-pic'src = {props.loggedUser.profilePic}></img>
+            </div>
         </div>
     )
 }else{

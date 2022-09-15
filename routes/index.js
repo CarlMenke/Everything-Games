@@ -2,14 +2,12 @@ const { Router } = require('express')
 const controllers = require('../controllers')
 const router = Router();
 
-const User = require('../models/user')
 
-
-router.get('/', (req,res)=>res.send('I am  G(root)'))
+router.get('/', (req,res)=>res.send('I am G(root)'))
 
 router.get('/allusers',controllers.getAllUsers )
 
-router.get('/newUser/:userName/:password/:profilePic',  controllers.createUser)
+router.post('/newUser/:userName/:password',  controllers.createUser)
 
 router.get('/checkUser/:userName/:password', controllers.checkUser)
 
@@ -33,7 +31,9 @@ router.get('/deleteUserPost', controllers.deleteUserPosts)
 
 router.get('/posts-by-topic/:topic_id', controllers.getPostByTopic)
 
+router.get('/posts-by-user/:user_id', controllers.getPostByUser)
+
+router.put('/updateUserDiscs/:id', controllers.addDiscToUser)
+
 
 module.exports = router
-
-///backend routes
